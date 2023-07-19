@@ -344,6 +344,36 @@ INSERT INTO `log_nuevos_clientes` VALUES (1,14,'2023-07-13','18:12:50','root@loc
 UNLOCK TABLES;
 
 --
+-- Table structure for table `log_nuevos_mercaderia`
+--
+
+DROP TABLE IF EXISTS `log_nuevos_mercaderia`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `log_nuevos_mercaderia` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `cantidad_ingresada` int DEFAULT NULL,
+  `precio` decimal(9,2) DEFAULT NULL,
+  `provedor` varchar(50) DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
+  `hora` time DEFAULT NULL,
+  `usuario` varchar(30) DEFAULT NULL,
+  `id_mercaderia` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `log_nuevos_mercaderia`
+--
+
+LOCK TABLES `log_nuevos_mercaderia` WRITE;
+/*!40000 ALTER TABLE `log_nuevos_mercaderia` DISABLE KEYS */;
+INSERT INTO `log_nuevos_mercaderia` VALUES (1,2,220.50,'8','2023-07-19','18:27:08','root@localhost',21);
+/*!40000 ALTER TABLE `log_nuevos_mercaderia` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `log_ticket_nuevo`
 --
 
@@ -478,7 +508,7 @@ CREATE TABLE `mercaderia` (
   PRIMARY KEY (`id`),
   KEY `provedor` (`provedor`),
   CONSTRAINT `mercaderia_ibfk_1` FOREIGN KEY (`provedor`) REFERENCES `provedor` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -487,9 +517,25 @@ CREATE TABLE `mercaderia` (
 
 LOCK TABLES `mercaderia` WRITE;
 /*!40000 ALTER TABLE `mercaderia` DISABLE KEYS */;
-INSERT INTO `mercaderia` VALUES (5,'Donec',1,'scelerisque mollis. Phasellus libero mauris, aliquam eu, accumsan sed, facilisis',400.00,1),(11,'molestie',9,'velit in aliquet lobortis, nisi nibh lacinia orci, consectetuer euismod',139.45,1),(12,'diam',5,'aliquet. Proin velit. Sed malesuada augue ut lacus. Nulla tincidunt,',18.44,1),(14,'orci',0,'metus urna convallis erat, eget tincidunt dui augue eu tellus.',952.21,4),(16,'purus.',8,'Ut sagittis lobortis mauris. Suspendisse aliquet molestie tellus. Aenean egestas',746.41,4),(17,'tortor,',7,'Sed congue, elit sed consequat auctor, nunc nulla vulputate dui,',541.06,4),(18,'sem',3,'fringilla euismod enim. Etiam gravida molestie arcu. Sed eu nibh',682.15,1),(19,'interdum.',1,'dolor quam, elementum at, egestas a, scelerisque sed, sapien. Nunc',178.52,4),(20,'magnis',6,'molestie orci tincidunt adipiscing. Mauris molestie pharetra nibh. Aliquam ornare,',262.91,4);
+INSERT INTO `mercaderia` VALUES (5,'Donec',1,'scelerisque mollis. Phasellus libero mauris, aliquam eu, accumsan sed, facilisis',400.00,1),(11,'molestie',9,'velit in aliquet lobortis, nisi nibh lacinia orci, consectetuer euismod',139.45,1),(12,'diam',5,'aliquet. Proin velit. Sed malesuada augue ut lacus. Nulla tincidunt,',18.44,1),(14,'orci',0,'metus urna convallis erat, eget tincidunt dui augue eu tellus.',952.21,4),(16,'purus.',8,'Ut sagittis lobortis mauris. Suspendisse aliquet molestie tellus. Aenean egestas',746.41,4),(17,'tortor,',7,'Sed congue, elit sed consequat auctor, nunc nulla vulputate dui,',541.06,4),(18,'sem',3,'fringilla euismod enim. Etiam gravida molestie arcu. Sed eu nibh',682.15,1),(19,'interdum.',1,'dolor quam, elementum at, egestas a, scelerisque sed, sapien. Nunc',178.52,4),(20,'magnis',6,'molestie orci tincidunt adipiscing. Mauris molestie pharetra nibh. Aliquam ornare,',262.91,4),(21,'prueba',2,'producto prueba',220.50,8);
 /*!40000 ALTER TABLE `mercaderia` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `insercion_mercaderia` AFTER INSERT ON `mercaderia` FOR EACH ROW INSERT INTO log_nuevos_mercaderia(id,id_mercaderia,cantidad_ingresada,precio,provedor,fecha,hora,usuario)
+VALUES (NULL,NEW.id, NEW.stock,NEW.precio, NEW.provedor, CURRENT_DATE(),CURRENT_TIME(),USER()) */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1515,4 +1561,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-07-19  3:04:21
+-- Dump completed on 2023-07-19 18:41:31
